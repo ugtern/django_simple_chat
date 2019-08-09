@@ -24,5 +24,5 @@ class Chat(models.Model):
     send_date = models.DateTimeField("Дата отправки сообщения", auto_now_add=True)
     
     class Meta:
-        verbose_name = 'Сообщение в чате'
-        verbose_name_plural = 'Сообщение в чате'
+        verbose_name = 'Сообщения в чате'
+        verbose_name_plural = 'Сообщения в чате'
