@@ -1,3 +1,16 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import permissions
 
-# Create your views here.
+from chat_room.models import Room
+from chat_room.seriallizers import RoomSrializers
+
+
+class Rooms(APIView):
+    """ Комнаты чата """
+
+    def get(self, request):
+        rooms = Room.objects.all()
+        serializer = RoomSrializers(rooms, many=True)
+        return Response({'data': serializer.data})
+
