@@ -1,11 +1,11 @@
 <template>
-  <div class="dialogs">
-    <div v-for="dialog in dialogs">
-      <h2>{{ dialog.username }}</h2>
-      <p>{{ dialog.text }}</p>
-      <span>{{ dialog.send_date }}</span>
-    </div>
-  </div>
+  <mu-container>
+    <mu-row v-for="dialog in dialogs">
+      <mu-col span="2">{{ dialog.user.username }}</mu-col>
+      <mu-col span="6">{{ dialog.text }}</mu-col>
+      <mu-col span="4">{{ dialog.send_date }}</mu-col>
+    </mu-row>
+  </mu-container>
 </template>
 
 <script>

@@ -1,10 +1,14 @@
 <template>
-  <div @keyup.enter="set_login">
-    <input type="text" v-model="login" placeholder="Логин"/>
-    <input type="password" v-model="password" placeholder="Пороль"/>
-    <button @click="set_login()" >Войти</button>
+  <mu-container @keyup.enter="set_login">
+    <mu-row>
+      <input type="text" v-model="login" placeholder="Логин"/>
+    </mu-row>
+    <mu-row>
+      <input type="password" v-model="password" placeholder="Пароль"/>
+    </mu-row>
+    <mu-button color="primary" @click="set_login()">Войти</mu-button>
     <div v-on="output_text">{{ output_text }}</div>
-  </div>
+  </mu-container>
 </template>
 
 <script>
@@ -30,14 +34,12 @@
                     },
                     success: (responce) => {
                         this.output_text = 'Вход успешен';
-                        alert('Вход успешен');
                         sessionStorage.setItem('auth_token', responce.data.attributes.auth_token);
-                        this.$router.push({name: 'home'});
+                        this.$emit('log_in', true)
                     },
                     error: (responce) => {
                         if (responce.status === 400){
                             this.output_text = 'Логин или пароль неверен';
-                            alert('Логин или пароль неверен');
                         }
                     },
                 })
