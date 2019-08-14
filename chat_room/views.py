@@ -31,6 +31,6 @@ class Dialogs(APIView):
         dialog = ChatPostSerializers(data=request.data)
         if dialog.is_valid():
             dialog.save(user=request.user)
-            return Response({'status': 'complite', })
+            return Response(status=201)
         else:
-            return Response({'status': 'failed'})
+            return Response(status=400)

@@ -1,24 +1,53 @@
 <template>
   <div>
-      <ul v-for="room in rooms" class="room" @click="load_dialog(room.id)">
-        <li>
-          Создатель комнаты = {{ room.creator.username }}
-        </li>
-          <ul v-for="user in room.invited" class="invited">
-            Приглашенные пользователи:
-            <li>
-           {{ user.username }}
-            </li>
-          </ul>
-        <li>
-          Дата создания комнаты: {{ room.creation_date }}
-        </li>
-      </ul>
+
+  <mu-paper :z-depth="1" class="demo-loadmore-wrap">
+      <mu-appbar full-width color="teal">
+        Список комнат
+        <mu-button icon slot="right" @click="refresh()">
+          <mu-icon value="re"></mu-icon>
+        </mu-button>
+      </mu-appbar>
+      <mu-container ref="container" class="demo-loadmore-content">
+        <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load">
+          <mu-list>
+            <template v-for="room in rooms" class="room">
+              <mu-list-item>
+                <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creator.username }}</mu-list-item-title>
+                <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creation_date }}</mu-list-item-title>
+              </mu-list-item>
+              <div v-for="user in room.invited">
+                <mu-list-item>
+                  <mu-list-item-title>
+                    {{ user.username }}
+                  </mu-list-item-title>
+                </mu-list-item>
+              </div>
+              <mu-divider />
+            </template>
+          </mu-list>
+        </mu-load-more>
+      </mu-container>
+</mu-paper>
+
+<!--      <ul v-for="room in rooms" class="room" @click="load_dialog(room.id)">-->
+<!--        <li>-->
+<!--          Создатель комнаты = {{ room.creator.username }}-->
+<!--        </li>-->
+<!--          <ul v-for="user in room.invited" class="invited">-->
+<!--            Приглашенные пользователи:-->
+<!--            <li>-->
+<!--           {{ user.username }}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        <li>-->
+<!--          Дата создания комнаты: {{ room.creation_date }}-->
+<!--        </li>-->
+<!--      </ul>-->
   </div>
 </template>
 
 <script>
-    import $ from 'jquery'
     import Dialog from '@/components/rooms/Dialog'
 
     export default {
@@ -29,6 +58,9 @@
         data() {
             return {
                 rooms: '',
+                refreshing: false,
+                loading: false,
+                text: 'List',
             }
         },
         created() {
@@ -49,6 +81,21 @@
             },
             load_dialog(id) {
                 this.$emit('load_dialog', id)
+            },
+
+            refresh () {
+              this.refreshing = true;
+              this.$refs.container.scrollTop = 0;
+              setTimeout(() => {
+                this.refreshing = false;
+                this.text = this.text === 'List' ? 'Menu' : 'List';
+              }, 2000)
+            },
+            load () {
+              this.loading = true;
+              setTimeout(() => {
+                this.loading = false;
+              }, 2000)
             }
         }
     }
@@ -58,4 +105,19 @@
   .room {
     text-align: left;
   }
+  .demo-loadmore-wrap {
+  width: 100%;
+  max-width: 360px;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  }
+  .demo-loadmore-wrap .mu-appbar {
+      width: 100%;
+    }
+.demo-loadmore-content {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
 </style>

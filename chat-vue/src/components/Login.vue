@@ -1,19 +1,20 @@
 <template>
   <mu-container @keyup.enter="set_login">
-    <mu-row>
-      <input type="text" v-model="login" placeholder="Логин"/>
-    </mu-row>
-    <mu-row>
-      <input type="password" v-model="password" placeholder="Пароль"/>
-    </mu-row>
-    <mu-button color="primary" @click="set_login()">Войти</mu-button>
+    <mu-container>
+      <mu-text-field v-model="login" label="UserName" label-float></mu-text-field><br/>
+      <mu-text-field v-model="password" label="Password" label-float error-text="" type="password"></mu-text-field>
+    </mu-container>
+
+    <mu-flex justify-content="center" align-items="center">
+      <mu-button full-width color="primary" @click="set_login()">Войти</mu-button>
+    </mu-flex>
+
     <div v-on="output_text">{{ output_text }}</div>
+
   </mu-container>
 </template>
 
 <script>
-    import $ from 'jquery'
-
     export default {
         name: "Login",
         data() {
@@ -49,5 +50,7 @@
 </script>
 
 <style scoped>
-
+  input {
+    width: 100%;
+  }
 </style>
