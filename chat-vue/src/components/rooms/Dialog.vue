@@ -30,7 +30,7 @@
             $.ajaxSetup({
                 headers: {'Authorization': 'Token ' + sessionStorage.getItem('auth_token')}
             });
-            this.load_dialogs()
+            this.load_dialogs();
         },
         methods: {
             load_dialogs() {
