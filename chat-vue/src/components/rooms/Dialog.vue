@@ -9,7 +9,7 @@
           <span>{{ dialog.send_date }}</span>
         </mu-row>
       </div>
-    <mu-text-field v-model="text" multi-line :rows="4" full-width placeholder="Введите текст..."></mu-text-field>
+    <mu-text-field v-model="text" multi-line :rows="4" full-width placeholder="Введите текст..." @keyup.enter="send_massage"></mu-text-field>
     <mu-button full-width color="success" @click="send_massage">Отправить</mu-button>
   </mu-container>
 </template>

@@ -25,6 +25,10 @@
     </mu-appbar>
     <mu-row>
       <mu-col span="3" xl="3">
+
+          <mu-button v-if="current_check" full-width color="primary" @click="current_check=!current_check">Чаты</mu-button>
+          <mu-button v-else full-width color="success" @click="current_check=!current_check">Пользователи</mu-button>
+
         <Room v-if="auth" @load_dialog="load_dialog"></Room>
       </mu-col>
       <mu-col span="6" xl="6">
@@ -86,6 +90,7 @@
                   show_dialog: false,
               },
               show2: true,
+              current_check: true,
           }
         },
         created() {

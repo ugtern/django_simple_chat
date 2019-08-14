@@ -12,17 +12,30 @@
         <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load">
           <mu-list>
             <template v-for="room in rooms" class="room">
-              <mu-list-item>
-                <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creator.username }}</mu-list-item-title>
-                <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creation_date }}</mu-list-item-title>
-              </mu-list-item>
-              <div v-for="user in room.invited">
-                <mu-list-item>
-                  <mu-list-item-title>
-                    {{ user.username }}
-                  </mu-list-item-title>
-                </mu-list-item>
-              </div>
+
+
+              <mu-menu open-on-hover>
+                  <mu-button>
+
+                  <mu-list-item>
+                    <mu-list-item-title  @click="load_dialog(room.id)" @>{{ room.creator.username }}</mu-list-item-title>
+                    <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creation_date }}</mu-list-item-title>
+                  </mu-list-item>
+
+                    </mu-button>
+
+                  <mu-list slot="content">
+                    <p><strong>Пользователи:</strong></p>
+                    <div v-for="user in room.invited">
+                      <mu-list-item>
+                        <mu-list-item-title>
+                          {{ user.username }}
+                        </mu-list-item-title>
+                      </mu-list-item>
+                    </div>
+                  </mu-list>
+              </mu-menu>
+
               <mu-divider />
             </template>
           </mu-list>
