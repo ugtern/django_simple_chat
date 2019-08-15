@@ -26,10 +26,14 @@
     <mu-row>
       <mu-col span="3" xl="3">
 
+        <div v-if="auth">
           <mu-button v-if="current_check" full-width color="primary" @click="current_check=!current_check">Чаты</mu-button>
           <mu-button v-else full-width color="success" @click="current_check=!current_check">Пользователи</mu-button>
 
-        <Room v-if="auth" @load_dialog="load_dialog"></Room>
+          <Room v-if="current_check" @load_dialog="load_dialog"></Room>
+          <Users v-else :id="dialog.current_room" :current_rooms_users="current_room_users"></Users>
+        </div>
+
       </mu-col>
       <mu-col span="6" xl="6">
         <Dialog v-if="dialog.show_dialog" :id="dialog.current_room" :key="dialog.current_room"></Dialog>
@@ -79,6 +83,7 @@
     import Room from "@/components/rooms/Room";
     import Dialog from "@/components/rooms/Dialog";
     import Login from "@/components/Login";
+    import Users from "./Users"
 
     export default {
         name: "Home",
@@ -91,6 +96,7 @@
               },
               show2: true,
               current_check: true,
+              current_room_users: [],
           }
         },
         created() {
@@ -100,6 +106,7 @@
             Room,
             Dialog,
             Login,
+            Users,
         },
         computed: {
         },
@@ -120,8 +127,10 @@
                 this.dialog.show_dialog = false;
                 this.auth_method();
             },
-            load_dialog(id) {
+            load_dialog(id, users) {
 
+                this.current_room_users = users;
+                console.log(this.current_room_users)
                 let show = this.dialog.show_dialog;
                 let current_id = this.dialog.current_room;
                 if (show) {

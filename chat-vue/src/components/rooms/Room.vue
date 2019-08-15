@@ -18,8 +18,8 @@
                   <mu-button>
 
                   <mu-list-item>
-                    <mu-list-item-title  @click="load_dialog(room.id)" @>{{ room.creator.username }}</mu-list-item-title>
-                    <mu-list-item-title  @click="load_dialog(room.id)">{{ room.creation_date }}</mu-list-item-title>
+                    <mu-list-item-title  @click="load_dialog(room.id, invited_users(room.invited))">{{ room.room_name }}</mu-list-item-title>
+                    <mu-list-item-title  @click="load_dialog(room.id, invited_users(room.invited))">{{ room.creation_date }}</mu-list-item-title>
                   </mu-list-item>
 
                     </mu-button>
@@ -92,17 +92,25 @@
                   }
               })
             },
-            load_dialog(id) {
-                this.$emit('load_dialog', id)
+            load_dialog(id, users) {
+                this.$emit('load_dialog', id, users)
+            },
+            invited_users(users) {
+                let invited_users_mass = [];
+                for (let i in users) {
+                    invited_users_mass.push(users[i].id)
+                }
+                return invited_users_mass
             },
 
             refresh () {
               this.refreshing = true;
               this.$refs.container.scrollTop = 0;
+              this.load_room();
               setTimeout(() => {
                 this.refreshing = false;
                 this.text = this.text === 'List' ? 'Menu' : 'List';
-              }, 2000)
+              }, 1000)
             },
             load () {
               this.loading = true;

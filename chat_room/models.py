@@ -7,6 +7,7 @@ class Room(models.Model):
     """ Модель комнаты чата """
 
     creator = models.ForeignKey(User, verbose_name="Создатель", on_delete=models.CASCADE)
+    room_name = models.TextField("Название комнаты", max_length=20)
     invited = models.ManyToManyField(User, verbose_name="Участники", related_name="invited_user")
     creation_date = models.DateTimeField("Дата создания комнаты", auto_now_add=True)
 

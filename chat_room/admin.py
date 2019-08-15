@@ -5,7 +5,7 @@ from chat_room.models import Room, Chat
 class RoomAdmin(admin.ModelAdmin):
     """ Админ панель комант чата """
 
-    list_display = ('creator', 'invited_user', 'creation_date')
+    list_display = ('creator', 'invited_user', 'creation_date', 'room_name')
 
     def invited_user(self, obj):
         return '\n'.join([user.username for user in obj.invited.all()])
