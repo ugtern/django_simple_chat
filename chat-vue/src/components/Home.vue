@@ -32,6 +32,9 @@
 
           <Room v-if="current_check" @load_dialog="load_dialog"></Room>
           <Users v-else :id="dialog.current_room" :current_rooms_users="current_room_users"></Users>
+
+          <mu-button full-width color="primary" @click="create_new_room">Создать комнату</mu-button>
+
         </div>
 
       </mu-col>
@@ -45,6 +48,9 @@
         <mu-flex justify-content="center" align-items="center">
           <mu-button @click="log_out" v-if="auth" full-width color="secondary">Выход</mu-button>
         </mu-flex>
+
+        <Create_room v-if="show_create_room"></Create_room>
+
       </mu-col>
     </mu-row>
 
@@ -84,6 +90,7 @@
     import Dialog from "@/components/rooms/Dialog";
     import Login from "@/components/Login";
     import Users from "./Users"
+    import Create_room from "./Create_room";
 
     export default {
         name: "Home",
@@ -97,6 +104,7 @@
               show2: true,
               current_check: true,
               current_room_users: [],
+              show_create_room: false,
           }
         },
         created() {
@@ -107,6 +115,7 @@
             Dialog,
             Login,
             Users,
+            Create_room,
         },
         computed: {
         },
@@ -130,7 +139,6 @@
             load_dialog(id, users) {
 
                 this.current_room_users = users;
-                console.log(this.current_room_users)
                 let show = this.dialog.show_dialog;
                 let current_id = this.dialog.current_room;
                 if (show) {
@@ -145,7 +153,14 @@
                     this.dialog.current_room = id;
                     this.dialog.show_dialog = !this.dialog.show_dialog;
                 }
-            }
+            },
+            create_new_room() {
+                this.current_check = false;
+                this.current_room_users = [];
+                this.dialog.current_room = '';
+                this.dialog.show_dialog = false;
+                this.show_create_room = !this.show_create_room;
+            },
         }
     }
 </script>

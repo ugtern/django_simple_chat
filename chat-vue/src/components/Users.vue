@@ -13,7 +13,7 @@
             <mu-list>
               <template v-for="user in users" class="room">
 
-                <mu-list-item-title v-if="checking_actual(user.id)" @click="add_user_to_room(user.id)">
+                <mu-list-item-title class="users" :class="{checked_user: checking_actual(user.id)}" @click="add_user_to_room(user.id)">
                   {{ user.username }}
                 </mu-list-item-title>
 
@@ -51,7 +51,6 @@
             $.ajaxSetup({
                 headers: {'Authorization': 'Token ' + sessionStorage.getItem('auth_token')}
             });
-            console.log(this.current_rooms_users);
             this.load_users()
         },
         methods: {
@@ -80,7 +79,7 @@
               })
             },
             checking_actual(id) {
-                return !this.current_rooms_users.includes(id)
+                return this.current_rooms_users.includes(id)
             },
 
             refresh () {
@@ -121,4 +120,13 @@
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
+  .checked_user {
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .users {
+    text-align: center;
+    cursor: pointer;
+  }
 </style>

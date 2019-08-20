@@ -9,6 +9,7 @@ from chat_room.seriallizers import RoomSrializers, ChatSerializers, ChatPostSeri
 
 class Rooms(APIView):
     """ Комнаты чата """
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         rooms = Room.objects.all()
@@ -38,6 +39,8 @@ class Dialogs(APIView):
 
 
 class ShowUsers(APIView):
+    """ Получение списка пользователей """
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         users = User.objects.all()

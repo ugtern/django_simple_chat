@@ -92,9 +92,6 @@
                   }
               })
             },
-            load_dialog(id, users) {
-                this.$emit('load_dialog', id, users)
-            },
             invited_users(users) {
                 let invited_users_mass = [];
                 for (let i in users) {
@@ -110,14 +107,17 @@
               setTimeout(() => {
                 this.refreshing = false;
                 this.text = this.text === 'List' ? 'Menu' : 'List';
-              }, 1000)
+              }, 1000);
             },
             load () {
               this.loading = true;
               setTimeout(() => {
                 this.loading = false;
               }, 2000)
-            }
+            },
+            load_dialog(id, users) {
+                this.$emit('load_dialog', id, users)
+            },
         }
     }
 </script>
