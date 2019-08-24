@@ -74,7 +74,6 @@
                   success: (responce) => {
                       this.users = '';
                       this.load_users();
-                      console.log('complite');
                   }
               })
             },

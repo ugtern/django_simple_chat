@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from chat_room.models import Room, Chat
 from chat_room.seriallizers import RoomSrializers, ChatSerializers, ChatPostSerializers, UserSerializer
@@ -12,9 +13,13 @@ class Rooms(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        rooms = Room.objects.all()
+        rooms = Room.objects.filter(Q(creator=request.user) | Q(invited=request.user))
         serializer = RoomSrializers(rooms, many=True)
         return Response({'data': serializer.data})
+
+    def post(self, request):
+        Room.objects.create(creator=request.user, room_name=request.data.get('room_name'))
+        return Response(status=201)
 
 
 class Dialogs(APIView):
