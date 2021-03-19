@@ -7,7 +7,7 @@ django-cors-headers==3.0.2
 django-rest-swagger==2.2.0
 django-summernote==0.8.11.4
 django-templated-mail==1.1.1
-djangorestframework==3.10.2
+djangorestframework==3.11.2
 djangorestframework-jsonapi==2.8.0
 djangorestframework-jwt==1.11.0
 djoser==2.0.1
